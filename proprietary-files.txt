@@ -1,4 +1,13 @@
-###Camera
+#audio
+vendor/lib/soundfx/libbundlewrapper.so:lib/soundfx/libbundlewrapper.so
+vendor/lib/soundfx/libreverbwrapper.so:lib/soundfx/libreverbwrapper.so
+vendor/lib/soundfx/libvisualizer.so:lib/soundfx/libvisualizer.so
+vendor/lib/soundfx/libLifevibes_lvverx.so:lib/soundfx/libLifevibes_lvverx.so
+vendor/lib/soundfx/libLifevibes_lvvetx.so:lib/soundfx/libLifevibes_lvvetx.so
+vendor/lib/soundfx/libdownmix.so:lib/soundfx/libdownmix.so
+vendor/lib/soundfx/libldnhncr.so:lib/soundfx/libldnhncr.so
+
+##Camera
 lib/hw/camera.universal7570.so:lib/hw/camera.vendor.universal7570.so
 lib/libexynoscamera.so
 lib/libexynoscamera3.so
