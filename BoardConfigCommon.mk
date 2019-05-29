@@ -26,24 +26,24 @@ TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
 
 # Kernel
-TARGET_KERNEL_ARCH := arm64
-TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_SOURCE := kernel/samsung/universal7570
-TARGET_KERNEL_CLANG_COMPILE := false
-TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
-KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9/bin
+#TARGET_KERNEL_ARCH := arm64
+#TARGET_KERNEL_HEADER_ARCH := arm64
+#TARGET_KERNEL_SOURCE := kernel/samsung/universal7570
+#TARGET_KERNEL_CLANG_COMPILE := false
+#TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+#KERNEL_TOOLCHAIN := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_OS)-x86/aarch64/aarch64-linux-android-4.9/bin
 
 # Image
-BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
-BOARD_KERNEL_IMAGE_NAME := Image
-BOARD_KERNEL_BASE := 0x10000000
-BOARD_KERNEL_PAGESIZE := 2048
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
-TARGET_CUSTOM_DTBTOOL := dtbhtoolExynos
-BOARD_KERNEL_SEPARATED_DT := True
+#BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
+#BOARD_KERNEL_IMAGE_NAME := Image
+#BOARD_KERNEL_BASE := 0x10000000
+#BOARD_KERNEL_PAGESIZE := 2048
+#BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
+#TARGET_CUSTOM_DTBTOOL := dtbhtoolExynos
+#BOARD_KERNEL_SEPARATED_DT := True
 
 #ВАРНИНХ!
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
+#BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
 #ВАРНИНХ!
 
 #OMX
@@ -75,6 +75,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 TARGET_EXFAT_DRIVER := sdfat
 
 # Recovery
+RECOVERY_SDCARD_ON_DATA := true
 TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
 TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/recovery/etc/recovery.fstab
 
@@ -82,7 +83,7 @@ TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/recovery/etc/recovery.fstab
 ifeq ($(RECOVERY_VARIANT),twrp)
 RECOVERY_SDCARD_ON_DATA := true
 TW_THEME := portrait_hdpi
-TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel/brightness"
+TW_BRIGHTNESS_PATH := "/sys/devices/14800000.dsim/backlight/panel/brightness"
 TW_MAX_BRIGHTNESS := 25500
 TW_DEFAULT_BRIGHTNESS := 12800
 TW_NO_REBOOT_BOOTLOADER := true
@@ -91,7 +92,7 @@ TW_INCLUDE_NTFS_3G := true
 TW_EXCLUDE_SUPERSU := true
 TW_EXTRA_LANGUAGES := true
 TW_USE_NEW_MINADBD := true
-TW_INCLUDE_CRYPTO := true
+#TW_INCLUDE_CRYPTO := true
 TW_INCLUDE_FBE := true
 endif
 
