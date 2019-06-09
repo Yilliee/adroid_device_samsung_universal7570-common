@@ -1,4 +1,11 @@
 #audio
+lib/hw/audio.a2dp.default.so
+lib/hw/audio.primary.universal7570.so
+vendor/lib/hw/audio.usb.default.so
+vendor/lib/hw/audio.r_submix.default.so
+vendor/lib/hw/android.hardware.audio@2.0-impl.so
+vendor/lib/hw/android.hardware.audio.effect@2.0-impl.so
+vendor/lib/libtinycompress.so
 vendor/lib/soundfx/libbundlewrapper.so:lib/soundfx/libbundlewrapper.so
 vendor/lib/soundfx/libreverbwrapper.so:lib/soundfx/libreverbwrapper.so
 vendor/lib/soundfx/libvisualizer.so:lib/soundfx/libvisualizer.so
