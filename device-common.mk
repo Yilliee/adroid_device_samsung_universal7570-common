@@ -1,6 +1,5 @@
 #
-# Copyright (C) 2016 The CyanogenMod Project
-#           (C) 2017 The LineageOS Project
+# Copyright (C) 2015 The Dokdo Project
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,6 +14,12 @@
 # limitations under the License.
 #
 
-VENDOR_PATH := device/samsung/universal7570-common
+LOCAL_PATH := device/samsung/universal7570-common
 
--include $(VENDOR_PATH)/board/*.mk
+$(call inherit-product, $(SRC_TARGET_DIR)/product/languages_full.mk)
+
+-include $(LOCAL_PATH)/product/*.mk
+
+# call Samsung LSI board support package
+$(call inherit-product, hardware/samsung_slsi-cm/exynos5/exynos5.mk)
+$(call inherit-product, hardware/samsung_slsi-cm/exynos7580/exynos7570.mk)

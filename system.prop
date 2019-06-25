@@ -1,15 +1,33 @@
-# Samsung specific
-ro.product_ship=true
-ro.debug_level=0x494d
+# Display
+ro.opengles.version=196610
 
-# RIL
-rild.libargs=-d /dev/umts_ipc0
+# HWC
+debug.hwc.otf=1
+debug.hwc.winupdate=1
 
-# read DS/SS property
-import /efs/factory.prop
+# Zygote
+#ro.zygote.disable_gl_preload=1
 
-# Disable ConsumerIR
-config.disable_consumerir=true
+# Wifi
+wifi.interface=wlan0
+net.tethering.noprovisioning=true
 
-# Enable ADB authentication
-ro.adb.secure=1
+# media
+media.stagefright.legacyencoder=1
+media.stagefright.less-secure=1
+
+# misc
+ro.chipname=exynos7570
+ro.arch=exynos7570
+
+# Strict Mode
+persist.sys.strictmode.disable=true
+
+# Samsung OEM
+ro.telephony.samsung.realcall=true
+ro.multisim.set_audio_params=true
+
+# USB
+persist.sys.usb.config=mtp
+dev.usbsetting.embedded=On
+ro.adb.qemud=1
