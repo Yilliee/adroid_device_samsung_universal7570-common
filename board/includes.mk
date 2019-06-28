@@ -7,7 +7,7 @@
 TARGET_SPECIFIC_HEADER_PATH := $(VENDOR_PATH)/include
 
 # CM Hardware
-BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
+#BOARD_HARDWARE_CLASS += hardware/samsung/cmhw
 
 # Properties
 TARGET_SYSTEM_PROP := $(VENDOR_PATH)/system.prop
