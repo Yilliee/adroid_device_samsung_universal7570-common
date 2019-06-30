@@ -21,7 +21,6 @@ lib/libexynosscaler.so
 lib/libexynosgscaler.so
 lib/libexynosutils.so
 lib/libexynosv4l2.so
-lib/libfimg.so
 lib/libhdmi.so
 lib/libhwcutils.so
 lib/libmpp.so
