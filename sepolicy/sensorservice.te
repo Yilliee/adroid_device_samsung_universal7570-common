@@ -1,0 +1,14 @@
+#### sensorservice
+#
+type sensorservice, domain;
+type sensorservice_exec, exec_type, file_type;
+type sensorservice_service, app_api_service, system_server_service, service_manager_type;
+
+init_daemon_domain(sensorservice)
+
+# /dev/input[0-9]*
+allow sensorservice input_device:dir r_dir_perms;
+allow sensorservice { input_device sensor_device }:chr_file rw_file_perms;
+
+# binder call
+allow sensorservice servicemanager:binder { call transfer };

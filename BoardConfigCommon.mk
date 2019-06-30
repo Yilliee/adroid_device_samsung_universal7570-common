@@ -1,137 +1,238 @@
-# Copyright (C) 2018 The LineageOS Project
-# SPDX-License-Identifier: Apache-2.0
+#
+# Copyright (C) 2017 The LineageOS Project
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
 
-COMMON_PATH := device/samsung/universal7570-common
+LOCAL_PATH := device/samsung/universal7570-common
 
-# Platform
-BOARD_VENDOR := samsung
-TARGET_BOARD_PLATFORM := exynos5
-TARGET_SOC := exynos7570
-TARGET_BOOTLOADER_BOARD_NAME := universal7570
+# Include path
+TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
+
+# Firmware
 TARGET_NO_BOOTLOADER := true
 TARGET_NO_RADIOIMAGE := true
 
-# Architecture
+# Platform
+TARGET_BOARD_PLATFORM := exynos5
+TARGET_SLSI_VARIANT := bsp
+TARGET_SOC := exynos7570
+TARGET_BOOTLOADER_BOARD_NAME := universal7570
+
+# CPU
 TARGET_ARCH := arm64
 TARGET_ARCH_VARIANT := armv8-a
 TARGET_CPU_ABI := arm64-v8a
-TARGET_CPU_ABI2 := 
+TARGET_CPU_ABI2 :=
 TARGET_CPU_VARIANT := cortex-a53
 
-# Secondary Architecture
 TARGET_2ND_ARCH := arm
 TARGET_2ND_ARCH_VARIANT := armv7-a-neon
 TARGET_2ND_CPU_ABI := armeabi-v7a
 TARGET_2ND_CPU_ABI2 := armeabi
 TARGET_2ND_CPU_VARIANT := cortex-a53
 
+# Binder
+TARGET_USES_64_BIT_BINDER := true
+
+# Extracted with libbootimg
+BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
+BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
+BOARD_KERNEL_BASE := 0x10000000
+BOARD_KERNEL_PAGESIZE := 2048
+BOARD_KERNEL_IMAGE_NAME := Image
+#BOARD_KERNEL_CMDLINE := The bootloader ignores the cmdline from the boot.img
+BOARD_KERNEL_SEPARATED_DT := true
+TARGET_CUSTOM_DTBTOOL := dtbhtoolExynos
+
 # Kernel
 TARGET_KERNEL_ARCH := arm64
 TARGET_KERNEL_HEADER_ARCH := arm64
-TARGET_KERNEL_SOURCE := kernel/samsung/universal7570
-KERNEL_TOOLCHAIN_PREFIX:=/home/nick/android/lineage/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
-TARGET_KERNEL_CLANG_COMPILE := false
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := /home/nick/android/lineage/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin/aarch64-linux-android-
+TARGET_KERNEL_CROSS_COMPILE_PREFIX := aarch64-linux-android-
+TARGET_LINUX_KERNEL_VERSION := 3.18
 
-# Image
-BOARD_CUSTOM_BOOTIMG_MK := hardware/samsung/mkbootimg.mk
-BOARD_KERNEL_IMAGE_NAME := Image
-BOARD_KERNEL_BASE := 0x10000000
-BOARD_KERNEL_PAGESIZE := 2048
-BOARD_MKBOOTIMG_ARGS := --kernel_offset 0x00008000 --ramdisk_offset 0x01000000 --tags_offset 0x00000100
-TARGET_CUSTOM_DTBTOOL := dtbhtoolExynos
-BOARD_KERNEL_SEPARATED_DT := True
-
-#ВАРНИНХ!
-BOARD_KERNEL_CMDLINE += androidboot.selinux=permissive
-#ВАРНИНХ!
+# Kernel config
+TARGET_KERNEL_SOURCE := kernel/samsung/on5xelte
 
 # Partitions
 BOARD_BOOTIMAGE_PARTITION_SIZE     := 33554432
 BOARD_RECOVERYIMAGE_PARTITION_SIZE := 39845888
 BOARD_SYSTEMIMAGE_PARTITION_SIZE   := 3145728000
-#BOARD_VENDORIMAGE_PARTITION_SIZE   := 681574400
-BOARD_USERDATAIMAGE_PARTITION_SIZE := 12066992128
+BOARD_USERDATAIMAGE_PARTITION_SIZE := 12075401216
 BOARD_CACHEIMAGE_PARTITION_SIZE    := 209715200
-BOARD_FLASH_BLOCK_SIZE := 131072
+BOARD_CACHEIMAGE_FILE_SYSTEM_TYPE  := ext4
 
-# Filesystem
+# blockdev --getbsz /dev/block/mmcblk0p9
+BOARD_FLASH_BLOCK_SIZE := 4096
+
+# Use these flags if the board has a ext4 partition larger than 2gb
+BOARD_HAS_LARGE_FILESYSTEM := true
 TARGET_USERIMAGES_USE_EXT4 := true
-TARGET_USERIMAGES_USE_F2FS := true
 
-# Extended Filesystem Support
-TARGET_EXFAT_DRIVER := sdfat
+# Vendor separation
+TARGET_COPY_OUT_VENDOR := system/vendor
 
-# Recovery
-TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
-TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/recovery/etc/recovery.fstab
+# Bluetooth
+BOARD_HAVE_BLUETOOTH := true
+BOARD_HAVE_BLUETOOTH_QCOM := true
+BOARD_HAS_QCA_BT_ROME := true
+BOARD_BLUETOOTH_BDROID_BUILDCFG_INCLUDE_DIR := $(LOCAL_PATH)/bluetooth
+QCOM_BT_USE_BTNV := true
+QCOM_BT_USE_SMD_TTY := true
 
-# Recovery (TWRP)
-ifeq ($(RECOVERY_VARIANT),twrp)
-RECOVERY_SDCARD_ON_DATA := true
-TW_THEME := portrait_hdpi
-TW_BRIGHTNESS_PATH := "/sys/class/backlight/panel/brightness"
-TW_MAX_BRIGHTNESS := 25500
-TW_DEFAULT_BRIGHTNESS := 12800
-TW_NO_REBOOT_BOOTLOADER := true
-TW_HAS_DOWNLOAD_MODE := true
-TW_INCLUDE_NTFS_3G := true
-TW_EXCLUDE_SUPERSU := true
-TW_EXTRA_LANGUAGES := true
-TW_USE_NEW_MINADBD := true
-TW_INCLUDE_CRYPTO := true
-TW_INCLUDE_FBE := true
-endif
+# Samsung HALs
+TARGET_AUDIOHAL_VARIANT := samsung
+TARGET_POWERHAL_VARIANT := samsung
+TARGET_SEC_FP_HAL_VARIANT := bauth
 
-# Android Verified Boot
-BOARD_AVB_ENABLE := false
-BOARD_BUILD_DISABLED_VBMETAIMAGE := true
-
-# VNDK
-BOARD_VNDK_VERSION := current
-BOARD_VNDK_RUNTIME_DISABLE := true
-
-# Vendor
-TARGET_COPY_OUT_VENDOR := vendor
-
-# Enable 64-bits binder
-TARGET_USES_64_BIT_BINDER := true
+# Samsung Hardware
+BOARD_HARDWARE_CLASS := hardware/samsung/lineagehw $(LOCAL_PATH)/lineagehw
 
 # Graphics
-TARGET_USES_HWC2 := true
+USE_OPENGL_RENDERER := true
 NUM_FRAMEBUFFER_SURFACE_BUFFERS := 3
-OVERRIDE_RS_DRIVER := libRSDriverArm.so
+BOARD_USES_EXYNOS5_COMMON_GRALLOC := true
 
-# DEX Pre-optimization
-ifeq ($(HOST_OS),linux)
-  ifneq ($(TARGET_BUILD_VARIANT),eng)
-    WITH_DEXPREOPT ?= true
-    WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY ?= true
-  endif
+# VR Front buffer
+#BOARD_USES_VR_FRONT_BUFFER := true
+
+# Samsung OpenMAX Video
+BOARD_USE_STOREMETADATA := true
+BOARD_USE_METADATABUFFERTYPE := true
+BOARD_USE_DMA_BUF := true
+BOARD_USE_ANB_OUTBUF_SHARE := true
+BOARD_USE_IMPROVED_BUFFER := true
+BOARD_USE_NON_CACHED_GRAPHICBUFFER := true
+BOARD_USE_GSC_RGB_ENCODER := true
+BOARD_USE_CSC_HW := false
+BOARD_USE_QOS_CTRL := false
+BOARD_USE_S3D_SUPPORT := false
+BOARD_USE_TIMESTAMP_REORDER_SUPPORT := true
+BOARD_USE_DEINTERLACING_SUPPORT := true
+BOARD_USE_VP8ENC_SUPPORT := true
+BOARD_USE_HEVCDEC_SUPPORT := true
+BOARD_USE_HEVCENC_SUPPORT := true
+BOARD_USE_HEVC_HWIP := false
+BOARD_USE_VP9DEC_SUPPORT := true
+BOARD_USE_VP9ENC_SUPPORT := false
+BOARD_USE_CUSTOM_COMPONENT_SUPPORT := true
+BOARD_USE_VIDEO_EXT_FOR_WFD_HDCP := true
+BOARD_USE_SINGLE_PLANE_IN_DRM := true
+
+# HWComposer
+BOARD_USES_VPP := true
+#BOARD_USES_VPP_V2 := true // 8890 only
+BOARD_HDMI_INCAPABLE := true
+
+# HWCServices - requires framework support
+#BOARD_USES_HWC_SERVICES := true
+
+# Device Tree
+BOARD_USES_DT := true
+
+# WiFiDisplay
+#BOARD_USES_VIRTUAL_DISPLAY := true - depends on platform changes
+BOARD_USES_VIRTUAL_DISPLAY_DECON_EXT_WB := false
+BOARD_USE_VIDEO_EXT_FOR_WFD_DRM := false
+BOARD_USES_VDS_BGRA8888 := true
+BOARD_VIRTUAL_DISPLAY_DISABLE_IDMA_G0 := false
+
+# LIBHWJPEG
+TARGET_USES_UNIVERSAL_LIBHWJPEG := true
+
+# FIMG2D
+BOARD_USES_SKIA_FIMGAPI := true
+BOARD_USES_FIMGAPI_V5X := true
+
+# SCALER
+BOARD_USES_DEFAULT_CSC_HW_SCALER := true
+BOARD_USES_SCALER_M2M1SHOT := true
+
+# Video scaling issue workaround
+TARGET_OMX_LEGACY_RESCALING := true
+
+# Wifi
+BOARD_HAS_QCOM_WLAN := true
+BOARD_WLAN_DEVICE := qcwcn
+BOARD_HOSTAPD_DRIVER := NL80211
+BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+BOARD_WPA_SUPPLICANT_DRIVER := NL80211
+BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
+WIFI_DRIVER_FW_PATH_AP := "ap"
+WIFI_DRIVER_FW_PATH_STA := "sta"
+WIFI_DRIVER_FW_PATH_P2P := "p2p"
+WIFI_DRIVER_MODULE_NAME := wlan
+#WIFI_DRIVER_MODULE_PATH := /system/lib/modules/qca_cld/qca_cld_wlan.ko
+WPA_SUPPLICANT_VERSION := VER_0_8_X
+
+# Wifi loader
+BOARD_HAVE_SAMSUNG_WIFI := true
+
+# Charger
+BOARD_CHARGING_MODE_BOOTING_LPM := /sys/class/power_supply/battery/batt_lp_charging
+BOARD_CHARGER_ENABLE_SUSPEND := true
+BOARD_CHARGER_SHOW_PERCENTAGE := true
+CHARGING_ENABLED_PATH := /sys/class/power_supply/battery/batt_lp_charging
+
+# DT2W
+#TARGET_TAP_TO_WAKE_NODE := /sys/class/sec/tsp/dt2w_enable
+
+# RIL
+BOARD_VENDOR := samsung
+BOARD_MODEM_TYPE := ss333
+BOARD_PROVIDES_LIBRIL := true
+BOARD_NEEDS_ROAMING_PROTOCOL_FIELD := true
+BOARD_NEEDS_IMS_TYPE_FIELD := true
+
+# Init
+TARGET_INIT_VENDOR_LIB := libinit_sec
+
+# Release tools
+#TARGET_RELEASETOOLS_EXTENSIONS := $(LOCAL_PATH)
+
+# Recovery
+#RECOVERY_VARIANT := twrp
+BOARD_HAS_DOWNLOAD_MODE := true
+TARGET_RECOVERY_FSTAB := $(LOCAL_PATH)/ramdisk/fstab.samsungexynos7570
+
+# TWRP
+ifeq ($(RECOVERY_VARIANT),twrp)
+PRODUCT_COPY_FILES += device/samsung/universal7570-common/twrp/twrp.fstab:recovery/root/etc/twrp.fstab
+TW_THEME := portrait_hdpi
+TW_BRIGHTNESS_PATH := /sys/class/backlight/panel/brightness
+TW_MAX_BRIGHTNESS := 255
+TW_DEFAULT_BRIGHTNESS := 162
+TW_NO_REBOOT_BOOTLOADER := true
+TW_INCLUDE_CRYPTO := true
+TW_INCLUDE_NTFS_3G := true
+TW_HAS_DOWNLOAD_MODE := true
+TW_NO_EXFAT_FUSE := true
+TW_EXCLUDE_SUPERSU := true
+TARGET_RECOVERY_PIXEL_FORMAT := "ABGR_8888"
+RECOVERY_SDCARD_ON_DATA := true
+BOARD_HAS_NO_REAL_SDCARD := true
+TW_USE_TOOLBOX=true
+TW_EXCLUDE_TWRPAPP := true
 endif
+
+# Seccomp filters
+BOARD_SECCOMP_POLICY += device/samsung/universal7570-common/seccomp
+
+# SELinux
+BOARD_SEPOLICY_DIRS += device/samsung/universal7570-common/sepolicy
 
 # Shims
 TARGET_LD_SHIM_LIBS := \
-    /vendor/lib/hw/audio.primary.universal7570.so|libshim_audio.so
-
-# Include
-TARGET_SPECIFIC_HEADER_PATH := $(COMMON_PATH)/include
-
-# Properties
-BOARD_PROPERTY_OVERRIDES_SPLIT_ENABLED := true
-TARGET_SYSTEM_PROP += $(COMMON_PATH)/system.prop
-
-# SELinux
-BOARD_PLAT_PRIVATE_SEPOLICY_DIR += $(COMMON_PATH)/sepolicy/private
-
-# Lineage hardware
-ifneq ($(findstring lineage, $(TARGET_PRODUCT)),)
-BOARD_HARDWARE_CLASS := \
-    hardware/samsung/lineagehw
-endif
-
-# Releasetools
-TARGET_RELEASETOOLS_EXTENSIONS := $(COMMON_PATH)/releasetools
-
-# Inherit from the proprietary version
--include vendor/samsung/universal7570-common/BoardConfigVendor.mk
+    /system/lib/libcamera_client.so|libcamera_client_shim.so \
+    /system/lib/libexynoscamera.so|libexynoscamera_shim.so \
+    /system/lib/libstagefright.so|libstagefright_shim.so
