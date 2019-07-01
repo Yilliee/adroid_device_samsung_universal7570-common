@@ -94,6 +94,6 @@ lib/libprotobuf-cpp-lite.so
 
 # Sensors
 bin/sensorservice
-vendor/lib/hw/sensors.universal7880.so
+vendor/lib/hw/sensors.universal7570.so
 lib/libsensorservice.so
 lib/libsensorlistener.so
